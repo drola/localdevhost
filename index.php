@@ -1,7 +1,8 @@
 <?php
 
 $app = require 'backend/bootstrap.php';
-$app['document_root'] = __DIR__;
+$app['document_root'] = __DIR__.'/../';
+$app['index'] = __DIR__.'/EXAMPLE.md';
 $app['assets_dir'] = "/localdevhost/web";
 $app['home'] = "/localdevhost/";
 $app->run();

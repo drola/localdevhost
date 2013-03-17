@@ -1,5 +1,13 @@
 {% extends layout %}
  
 {% block content %}
+
+<h1>Projects</h1>
+<ul>
+	{% for dir in dirs %}
+	<li><a href="/{{ dir}}">{{ dir }}</a></li>
+	{% endfor %}
+</ul>
+
 {{ text | raw }}
 {% endblock %}

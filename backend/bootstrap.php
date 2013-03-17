@@ -17,7 +17,10 @@ $app->before(function () use ($app) {
 });
 
 $app->get('/', function() use ($app) {
-	return $app['twig']->render('index.twig', array('text' => Markdown::defaultTransform(file_get_contents($app['document_root'].'/EXAMPLE.md'))));
+	return $app['twig']->render('index.twig', array(
+		'dirs' => array_map(function($i) use ($app) { return str_replace($app['document_root'], '', $i); },
+			scandir($app['document_root'])),
+		'text' => Markdown::defaultTransform(file_get_contents($app['index']))));
 });
 
 return $app;
