@@ -11,7 +11,6 @@ $app->register(new Silex\Provider\TwigServiceProvider(),
 );
 
 $app->before(function () use ($app) {
-	$app['twig']->addGlobal('layout', null);
 	$app['twig']->addGlobal('layout', $app['twig']->loadTemplate('layout.twig'));
 	$app['twig']->addGlobal('home', $app['home']);
 	$app['twig']->addGlobal('assets', $app['assets_dir']);
