@@ -5,4 +5,7 @@ $app['document_root'] = __DIR__.'/../';
 $app['index'] = __DIR__.'/EXAMPLE.md';
 $app['assets_dir'] = "/localdevhost/web";
 $app['home'] = "/localdevhost/";
+$app['logs'] = array(
+    array('/var/log/apache2/error.log', 'apache/error.log', "Error Log")
+    );
 $app->run();

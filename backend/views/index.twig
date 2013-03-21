@@ -1,5 +1,5 @@
 {% extends layout %}
- 
+
 {% block content %}
 
 <h1>Projects</h1>
@@ -8,6 +8,30 @@
 	<li><a href="/{{ dir}}">{{ dir }}</a></li>
 	{% endfor %}
 </ul>
-
+<hr />
+{% for log in logs %}
+<h2>{{ log.title }}</h2>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Timestamp</th>
+      <th>Severity</th>
+      <th>Client</th>
+      <th>Message</th>
+  </tr>
+</thead>
+<tbody>
+    {% for line in log.lines %}
+    <tr>
+        <td>{{ line.datetime | date('d.M.Y H:i:s') }}</td>
+        <td>{{ line.severity }}</td>
+        <td>{{ line.client }}</td>
+        <td>{{ line.message }}</td>
+    </tr>
+    {% endfor %}
+</tbody>
+</table>
+{% endfor %}
+<hr />
 {{ text | raw }}
 {% endblock %}
