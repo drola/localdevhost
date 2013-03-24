@@ -38,4 +38,25 @@ $app->get('/', function() use ($app) {
 		'text' => Markdown::defaultTransform(file_get_contents($app['index']))));
 });
 
+$app->get('/browse/{path}', function(Silex\Application $app, $path) use($app) {
+    $root = realpath($app['document_root']);
+    $path = realpath($root.'/'.$path);
+
+    //Security
+    if(strpos($path, $root) !== 0) {
+        $app->abort(404, "Not found.");
+    }
+
+    $finfo = finfo_open(FILEINFO_MIME_TYPE);
+
+    return $app->json(array_map(function($i) use ($finfo, $path) {
+        $filename = $path.'/'.$i;
+        $info = array();
+        $info['name'] = $i;
+        $info['mime'] = finfo_file($finfo, $filename);
+        $info['size'] = filesize($filename);
+        return $info;
+    }, scandir($path)));
+})->assert('path', '.+');
+
 return $app;
