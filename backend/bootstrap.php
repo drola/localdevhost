@@ -70,7 +70,7 @@ $app->get('/browse/{path}', function(Silex\Application $app, $path) use($app) {
 
 $app->get('/config', function() use($app) {
 
-    $dir = $app['document_root'].$app['assets_dir'].'/img/icons/24/';
+    $dir = $app['document_root'].$app['assets_dir'].'/img/icons/16/';
     $list = scandir($dir);
     $list = array_filter($list, function($i) {
         return preg_match('/\.png$/', $i);
@@ -82,31 +82,13 @@ $app->get('/config', function() use($app) {
         return str_replace(array(".png"), array(""), $i);
     }, $list);
     $list = array_map(function($i) use($app) {
-        return $app['assets_dir'].'/img/icons/24/'.$i;
+        return $app['assets_dir'].'/img/icons/16/'.$i;
     }, $list);
 
     $mime = array_combine($keys, $list);
 
     return $app->json(array('browse_path' => $app['url_generator']->generate('browse', array('path'=>"__path__")),
         'mime'=>$mime));
-});
-
-$app->get('/mime_icons', function() use($app) {
-    $dir = $app['document_root'].$app['assets_dir'].'/img/icons/24/';
-    $list = scandir($dir);
-    $list = array_filter(function($i) {
-        return preg_match('/\.png$/', $i);
-    }, $list);
-    $list = array_map(function($i) {
-        return basename($i);
-    }, $list);
-    $keys = array_map(function($i) {
-        return str_replace(array("-", ".png"), array("/", ""), $i);
-    }, $list);
-    $list = array_map(function($i) use($app) {
-        return $app['assets_dir'].'/img/icons/24/'.$i;
-    }, $list);
-    return $app->json(array_combine($keys, $list));
 });
 
 return $app;
