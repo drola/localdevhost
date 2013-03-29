@@ -51,12 +51,13 @@ $app->get('/browse/{path}', function(Silex\Application $app, $path) use($app) {
 
     $finfo = finfo_open(FILEINFO_MIME_TYPE);
 
-    return $app->json(array('path'=>str_replace($root, "", $path), 'items'=>array_map(function($i) use ($finfo, $path) {
+    return $app->json(array('path'=>str_replace($root, "", $path), 'items'=>array_map(function($i) use ($finfo, $path, $root) {
         $filename = $path.'/'.$i;
         $info = array();
         $info['name'] = $i;
         $info['mime'] = finfo_file($finfo, $filename);
         $info['size'] = filesize($filename);
+        $info['path'] = str_replace($root, "", $filename);
         return $info;
     }, scandir($path))));
 })->assert('path', '.+')->bind('browse');

@@ -1,5 +1,5 @@
 <h3>{{ path }}</h3>
-<table class="table table-striped">
+<table class="table table-striped table-condensed table-hover">
 	<thead>
 		<th></th>
 		<th>Name</th>
@@ -8,9 +8,9 @@
 	<tbody>
 		{{#each items}}
 		<tr>
-			<td>I</td>
-			<td>{{ name }}</td>
-			<td>{{ size }}</td>
+			<td></td>
+			<td><a href="#" data-path="{{ path }}" class="browser-link">{{ name }}</a></td>
+			<td>{{fileSize size}}</td>
 		</tr>
 		{{/each}}
 	</tbody>

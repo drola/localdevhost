@@ -1,4 +1,5 @@
 requirejs.config({
+    urlArgs: "v=" + (new Date()).getTime(),
     shim: {
         backbone: {
             deps: ['jquery', 'underscore', 'json2'],
@@ -18,7 +19,8 @@ requirejs.config({
         }
     },
     hbs: {
-        disableI18n: true
+        disableI18n: true,
+        helperDirectory: "app/tpl/helpers/"
     },
     paths: {
         jquery: 'vendor/jquery-1.9.1.min',
