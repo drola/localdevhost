@@ -11,6 +11,8 @@ $app->register(new Silex\Provider\TwigServiceProvider(),
 	array('twig.path' => __DIR__.'/views')
 );
 
+$app->register(new Silex\Provider\UrlGeneratorServiceProvider());
+
 $app->before(function () use ($app) {
 	$app['twig']->addGlobal('layout', $app['twig']->loadTemplate('layout.twig'));
 	$app['twig']->addGlobal('home', $app['home']);
@@ -49,14 +51,18 @@ $app->get('/browse/{path}', function(Silex\Application $app, $path) use($app) {
 
     $finfo = finfo_open(FILEINFO_MIME_TYPE);
 
-    return $app->json(array_map(function($i) use ($finfo, $path) {
+    return $app->json(array('path'=>str_replace($root, "", $path), 'items'=>array_map(function($i) use ($finfo, $path) {
         $filename = $path.'/'.$i;
         $info = array();
         $info['name'] = $i;
         $info['mime'] = finfo_file($finfo, $filename);
         $info['size'] = filesize($filename);
         return $info;
-    }, scandir($path)));
-})->assert('path', '.+');
+    }, scandir($path))));
+})->assert('path', '.+')->bind('browse');
+
+$app->get('/config', function() use($app) {
+    return $app->json(array('browse_path' => $app['url_generator']->generate('browse', array('path'=>"__path__"))));
+});
 
 return $app;

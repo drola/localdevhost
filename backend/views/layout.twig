@@ -52,11 +52,16 @@
             {% endblock %}
         </div> <!-- /container -->
 
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<!--        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
 
-        <script src="{{asset}}js/vendor/bootstrap.min.js"></script>
+        <script src="{{asset}}js/vendor/bootstrap.min.js"></script>-->
 
-        <script src="{{asset}}js/main.js"></script>
+        <script data-main="{{asset}}js/main" src="{{asset}}js/vendor/require.js"></script>
+        <script type="text/javascript">
+        define('config', function () {
+            return {{ render(app.request.baseUrl ~ '/config') }}
+        });
+        </script>
     </body>
 </html>
