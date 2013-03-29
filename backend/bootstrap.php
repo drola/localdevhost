@@ -49,9 +49,15 @@ $app->get('/browse/{path}', function(Silex\Application $app, $path) use($app) {
         $app->abort(404, "Not found.");
     }
 
+    //README.md
+    $readme = "";
+    if(file_exists($path.'/README.md')) {
+        $readme = Markdown::defaultTransform(file_get_contents($path.'/README.md'));
+    }
+
     $finfo = finfo_open(FILEINFO_MIME_TYPE);
 
-    return $app->json(array('path'=>str_replace($root, "", $path) | "/", 'items'=>array_map(function($i) use ($finfo, $path, $root) {
+    return $app->json(array('path'=>str_replace($root, "", $path) | "/", 'readme'=>$readme, 'items'=>array_map(function($i) use ($finfo, $path, $root) {
         $filename = $path.'/'.$i;
         $info = array();
         $info['name'] = $i;
