@@ -15,7 +15,6 @@ define(["hbs!app/tpl/browser", "app/model/directory"], function(browserTpl, Dire
             return this;
         },
         browse: function(e) {
-            console.log("HEllo");
             var path = $(e.currentTarget).data('path');
             this.stopListening(this.model);
             this.model = new DirectoryModel(path);

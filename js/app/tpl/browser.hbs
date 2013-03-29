@@ -1,16 +1,16 @@
 <h3>{{ path }}</h3>
-<table class="table table-striped table-condensed table-hover">
+<table class="table table-striped table-condensed table-hover browser">
 	<thead>
-		<th></th>
+		<th class="browser-col-icon"></th>
 		<th>Name</th>
 		<th>Size</th>
 	</thead>
 	<tbody>
 		{{#each items}}
 		<tr>
-			<td></td>
+			<td class="browser-col-icon">{{ mimeImg mime }}</td>
 			<td><a href="#" data-path="{{ path }}" class="browser-link">{{ name }}</a></td>
-			<td>{{fileSize size}}</td>
+			<td>{{fileSize size mime}}</td>
 		</tr>
 		{{/each}}
 	</tbody>
