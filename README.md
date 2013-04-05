@@ -8,7 +8,7 @@ Features
  - Markdown display
  - File browser
 
-![Localdevhost screenshot](https://github.com/drola/localdevhost/raw/master/img/screenshot.jpg "Localdevhost screenshot")
+![Localdevhost screenshot](https://github.com/drola/localdevhost/raw/master/img/screenshot.jpeg "Localdevhost screenshot")
 
 Dependencies
 ------------
