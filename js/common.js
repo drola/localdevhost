@@ -30,6 +30,7 @@ requirejs.config({
         handlebars: 'vendor/handlebars',
         hbs: 'vendor/hbs',
         hbs_i18nprecompile: 'vendor/hbs_i18nprecompile',
-        Handlebars: 'vendor/handlebars'
+        Handlebars: 'vendor/handlebars',
+        hljs: 'vendor/highlight.js/highlight.pack'
     }
 });

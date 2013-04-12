@@ -1,4 +1,4 @@
-define(["hbs!app/tpl/browser", "app/model/directory"], function(browserTpl, DirectoryModel) {
+define(["hbs!app/tpl/browser", "app/model/directory", 'hljs'], function(browserTpl, DirectoryModel) {
     var Browser = Backbone.View.extend({
         events: {
             "click a.browser-link": "browse"
@@ -11,6 +11,7 @@ define(["hbs!app/tpl/browser", "app/model/directory"], function(browserTpl, Dire
         },
         render: function() {
             this.$el.html(browserTpl(this.model.attributes));
+            this.$el.find('pre.code').each(function(i, e) {hljs.highlightBlock(e);});
             this.delegateEvents();
             return this;
         },
