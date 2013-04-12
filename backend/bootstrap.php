@@ -49,23 +49,38 @@ $app->get('/browse/{path}', function(Silex\Application $app, $path) use($app) {
         $app->abort(404, "Not found.");
     }
 
+    //Initialize mime type lookup
+    $finfo = finfo_open(FILEINFO_MIME_TYPE);
+
+    //If this is text file, show it's contents
+    $text_cnt = "";
+    $filename = "";
+    if(is_file($path) && preg_match("/$text/", finfo_file($finfo, $path))) {
+        $filename = basename($path);
+        $text_cnt = file_get_contents($path);
+        $path = dirname($path);
+    }
+
     //README.md
     $readme = "";
     if(file_exists($path.'/README.md')) {
         $readme = Markdown::defaultTransform(file_get_contents($path.'/README.md'));
     }
 
-    $finfo = finfo_open(FILEINFO_MIME_TYPE);
-
-    return $app->json(array('path'=>str_replace($root, "", $path) | "/", 'readme'=>$readme, 'items'=>array_map(function($i) use ($finfo, $path, $root) {
-        $filename = $path.'/'.$i;
-        $info = array();
-        $info['name'] = $i;
-        $info['mime'] = finfo_file($finfo, $filename);
-        $info['size'] = filesize($filename);
-        $info['path'] = str_replace($root, "", $filename);
-        return $info;
-    }, scandir($path))));
+    return $app->json(array(
+        'path'=>str_replace($root, "", $path) | "/",
+        'readme'=>$readme,
+        'filename'=>$filename,
+        'text_cnt'=>$text_cnt,
+        'items'=>array_map(function($i) use ($finfo, $path, $root) {
+            $filename = $path.'/'.$i;
+            $info = array();
+            $info['name'] = $i;
+            $info['mime'] = finfo_file($finfo, $filename);
+            $info['size'] = filesize($filename);
+            $info['path'] = str_replace($root, "", $filename);
+            return $info;
+        }, scandir($path))));
 })->assert('path', '.+')->bind('browse');
 
 $app->get('/config', function() use($app) {
